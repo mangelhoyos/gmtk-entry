@@ -34,7 +34,7 @@ public class NPCPlayableCharacter : MonoBehaviour
         Agent = GetComponent<NavMeshAgent>();
         if(selectedPlayer == null)
         {
-            //selectedPlayer = this;
+            selectedPlayer = this;
         }   
     }
 
@@ -108,6 +108,7 @@ public class NPCPlayableCharacter : MonoBehaviour
         }
 
         LerpTime += Time.deltaTime;
+ 
     }
 
     public void KillEnemy()
