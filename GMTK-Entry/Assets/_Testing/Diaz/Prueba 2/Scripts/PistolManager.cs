@@ -11,6 +11,8 @@ public class PistolManager : MonoBehaviour
 
     [SerializeField] private float bulletSpeed = 5f;
 
+    Coroutine shootingCoroutine = null;
+
     private bool shoot = false;
 
     private IEnumerator ShootColdDown()
@@ -27,13 +29,20 @@ public class PistolManager : MonoBehaviour
 
     public void StartShooting()
     {
-        shoot = true;
-        StartCoroutine(ShootColdDown());
+        if (shootingCoroutine == null)
+        {
+            shoot = true;
+            shootingCoroutine = StartCoroutine(ShootColdDown());
+        }
     }
 
     public void StopShooting() 
-    { 
-        shoot = false;
-        StopCoroutine(ShootColdDown());
+    {
+        if (shootingCoroutine != null)
+        {
+            shoot = false;
+            StopCoroutine(ShootColdDown());
+            shootingCoroutine = null;
+        }
     }
 }
