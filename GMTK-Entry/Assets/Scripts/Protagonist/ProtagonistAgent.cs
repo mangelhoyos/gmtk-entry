@@ -15,6 +15,11 @@ public class ProtagonistAgent : MonoBehaviour
     [SerializeField] private LayerMask unitLayerMask;
     [SerializeField] private float retreatDistance;
 
+    //Diaz
+    [SerializeField] private AimToTarget aimToTargetManager;
+    [SerializeField] private ProtaAnimationManager protaAnimationManager;
+    [SerializeField] private PistolManager pistolManager;
+
     private bool isDead = false;
     private void Start()
     {
@@ -98,6 +103,11 @@ public class ProtagonistAgent : MonoBehaviour
         {
             retreatDestination = transform.position;
         }
+
+        //Diaz
+        aimToTargetManager.ChangeTargetPosition(NPCFound.transform.position);
+
+        pistolManager.StartShooting();
 
         return retreatDestination;
     }

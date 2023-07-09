@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class ProtaAnimationManager : MonoBehaviour
 {
-    private Animator animator;
+    [SerializeField] private Animator animator;
+    [SerializeField] private Animator pistolAnimator;
     private bool isDead = false;
 
     public void ChangeProtaMovementAnimation(bool isInCombat, float velocity)
@@ -38,26 +39,20 @@ public class ProtaAnimationManager : MonoBehaviour
     {
         isDead = true;
         animator.SetBool("IsDead", true);
-
-        // Si el personaje está muerto, no activar la animación de recibir daño
-        animator.SetBool("IsTakingDamage", false);
     }
 
-    public void ChangeProtaToTakingDamageAnimation()
+    public void ChangeProtaTakingDamageAnimation()
     {
         if (isDead) return;
 
         // Activar la animación de recibir daño
-        animator.SetBool("IsTakingDamage", true);
-
-    }
-
-    public void ChangeProtaToNormalAnimation()
-    {
-        if (isDead) return;
-
-        // Activar la animación de recibir daño
-
         animator.SetTrigger("IsTakingDamage");
+    }
+
+    public void ShootPistolAnimation()
+    {
+        if (isDead) return;
+        // Activar la animacion de disparo
+        animator.SetTrigger("IsShooting");
     }
 }
