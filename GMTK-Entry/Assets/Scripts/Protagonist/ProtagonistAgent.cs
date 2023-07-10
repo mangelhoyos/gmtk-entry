@@ -60,6 +60,7 @@ public class ProtagonistAgent : MonoBehaviour
                 Debug.Log("Exiting fighting state...");
                 ChangeAgentTarget(transform.position, false);
                 pistolManager.StopShooting();
+                aimToTargetManager.DisableAimToTarget();
                 yield return new WaitForSeconds(1f);
                 isFighting = false;
                 agent.updateRotation = true;

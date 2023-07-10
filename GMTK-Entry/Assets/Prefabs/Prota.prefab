@@ -204,7 +204,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3c430f382484144e925c097c2d33cfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Weight: 1
+  m_Weight: 0
   m_Data:
     m_ConstrainedObject: {fileID: 6624076198649163207}
     m_SourceObjects:
@@ -721,7 +721,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3c430f382484144e925c097c2d33cfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Weight: 1
+  m_Weight: 0
   m_Data:
     m_ConstrainedObject: {fileID: 2590321370098560445}
     m_SourceObjects:
@@ -984,7 +984,7 @@ Transform:
   m_GameObject: {fileID: 5654123970004442561}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.42234802, y: 0.214, z: -1.488}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6779718095982645051}
@@ -992,7 +992,7 @@ Transform:
   - {fileID: 7588534127502290518}
   - {fileID: 1062963159050593938}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &7110135077094706869
 Animator:
@@ -1100,7 +1100,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  moveSpeed: 1
+  moveSpeed: 2
+  fadeSpeed: 100
+  bodyMultiAimConstraint: {fileID: 1750218614614227851}
+  handMultiAimConstraint: {fileID: 809439083481727132}
 --- !u!114 &7228007497681514284
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1446,6 +1449,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6442480131200356370}
+  - component: {fileID: 8387339386632427581}
   m_Layer: 0
   m_Name: BulletsSpawnPoint
   m_TagString: Untagged
@@ -1460,14 +1464,27 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7673881451632679636}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 1.362, z: -10.172}
+  m_LocalRotation: {x: -0.00000041723237, y: 1, z: 0.0000002756714, w: -0.00000044703467}
+  m_LocalPosition: {x: 0.0000008940698, y: 1.3620085, z: -10.171997}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6927878007940213267}
   m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!114 &8387339386632427581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7673881451632679636}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6f3e0970e096c14181198ed6128c31d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
 --- !u!1 &7870367529134882304
 GameObject:
   m_ObjectHideFlags: 0
@@ -2067,4 +2084,5 @@ MonoBehaviour:
   bulletsSpawnPoint: {fileID: 6442480131200356370}
   bulletsPrefab: {fileID: 8462030973402963817, guid: f3f70909725f8cf438a2588d0bbb04e1, type: 3}
   protaAnimationManager: {fileID: 7228007497681514284}
-  bulletSpeed: 5
+  bulletSpeed: 450
+  coolDownTime: 2

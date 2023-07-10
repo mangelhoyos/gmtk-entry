@@ -11,6 +11,8 @@ public class PistolManager : MonoBehaviour
 
     [SerializeField] private float bulletSpeed = 5f;
 
+    [SerializeField] private float coolDownTime = 2f;
+
     Coroutine shootingCoroutine = null;
 
     private bool shoot = false;
@@ -23,7 +25,7 @@ public class PistolManager : MonoBehaviour
             bullet.GetComponent<Rigidbody>().velocity = bulletsSpawnPoint.forward * bulletSpeed;
             protaAnimationManager.ShootPistolAnimation();
         }
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(coolDownTime);
         StartCoroutine(ShootColdDown());
     }
 
