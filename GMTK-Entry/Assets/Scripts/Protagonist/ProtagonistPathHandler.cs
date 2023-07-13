@@ -56,5 +56,14 @@ public class ProtagonistPathHandler : MonoBehaviour
             yield return new WaitForSeconds(.1f);
         }
     }
-    
+
+    private void OnDrawGizmos()
+    {
+        foreach(var pathPoint in pathPoints)
+        {
+              Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(pathPoint.transform.position, 15f);
+        }
+    }
+
 }

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class UIHandler : MonoBehaviour
@@ -14,10 +15,21 @@ public class UIHandler : MonoBehaviour
 
     [SerializeField] private Image healthBar;
 
+    [SerializeField] private UnityEvent OnDeath;
+
     private int actualPoints = 0;
     private int actualHealth;
     [SerializeField] 
     private int maxHealth;
+
+    private bool isDead = false;
+
+    public static UIHandler Instance { get; private set; }
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     private void Start()
     {
@@ -39,13 +51,21 @@ public class UIHandler : MonoBehaviour
         }
 
         actualPoints += pointsToAdd;
-        pointsText.text = actualPoints.ToString();
+        pointsText.text = actualPoints.ToString("000000");
     }
 
     public void ReduceHealth()
     {
-        actualHealth--;
-        StartCoroutine(SmoothReduceHealthBar((float)actualHealth / (float)maxHealth));
+        if (!isDead)
+        {
+            actualHealth--;
+            StartCoroutine(SmoothReduceHealthBar((float)actualHealth / (float)maxHealth));
+            if (actualHealth <= 0)
+            {
+                isDead = true;
+                OnDeath?.Invoke();
+            }
+        }
     }
 
     IEnumerator SmoothReduceHealthBar(float desiredFillAmount)
