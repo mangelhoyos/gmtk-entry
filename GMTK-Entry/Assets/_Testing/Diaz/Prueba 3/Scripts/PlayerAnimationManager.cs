@@ -7,6 +7,11 @@ public class PlayerAnimationManager : MonoBehaviour
     private Animator animator;
     private bool isDead = false;
 
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
+    }
+
     public void ChangePlayerMovementAnimation(float velocity)
     {
         if (isDead) return;

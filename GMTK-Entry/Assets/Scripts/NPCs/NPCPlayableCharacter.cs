@@ -15,8 +15,11 @@ public class NPCPlayableCharacter : MonoBehaviour
 
     public Action OnDeath;
 
+    public bool isActive = false;
+
     //Movement
     private Camera CameraUsed;
+    [Header("Movement")]
     [SerializeField]
     [Range(0, 0.99f)]
     private float Smoothing = 0.25f;
@@ -27,6 +30,15 @@ public class NPCPlayableCharacter : MonoBehaviour
     private float LerpTime = 0;
     private Vector3 LastDirection;
     private Vector3 MovementVector;
+
+    //Attack
+    [Header("Attack")]
+    [SerializeField] private PlayerAnimationManager playerAnimationManager;
+
+    [SerializeField] private GameObject attackRangePoint;
+    [SerializeField] private float attackRadius = 1f;
+    [SerializeField] private float maxDistance = 1f;
+    [SerializeField] private LayerMask layerMask;
 
     private void OnEnable()
     {
@@ -60,55 +72,75 @@ public class NPCPlayableCharacter : MonoBehaviour
 
     private void GeneratePlayerBehaviour()
     {
-        MovementVector = Vector3.zero;
+        if (isActive)
+        {
+            MovementVector = Vector3.zero;
 
-        if (Input.GetKey(KeyCode.W))
-        {
-            MovementVector += Vector3.forward;
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            MovementVector += Vector3.left;
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            MovementVector += Vector3.right;
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            MovementVector += Vector3.back;
-        }
+            if (Input.GetKey(KeyCode.W))
+            {
+                MovementVector += Vector3.forward;
+            }
+            if (Input.GetKey(KeyCode.A))
+            {
+                MovementVector += Vector3.left;
+            }
+            if (Input.GetKey(KeyCode.D))
+            {
+                MovementVector += Vector3.right;
+            }
+            if (Input.GetKey(KeyCode.S))
+            {
+                MovementVector += Vector3.back;
+            }
 
-        MovementVector.Normalize();
-        if (MovementVector != LastDirection)
-        {
-            LerpTime = 0;
-        }
-        LastDirection = MovementVector;
+            MovementVector.Normalize();
+            if (MovementVector != LastDirection)
+            {
+                LerpTime = 0;
+            }
+            LastDirection = MovementVector;
 
-        MovementVector = CameraUsed.transform.TransformDirection(MovementVector);
-        MovementVector.x = MovementVector.y;
-        MovementVector.y = 0;
+            MovementVector = CameraUsed.transform.TransformDirection(MovementVector);
+            MovementVector.x = MovementVector.y;
+            MovementVector.y = 0;
 
-        TargetDirection = Vector3.Lerp(
-            TargetDirection,
-            MovementVector,
-            Mathf.Clamp01(LerpTime * TargetLerpSpeed * (1 - Smoothing))
-        );
-
-        Agent.Move(TargetDirection * Agent.speed * Time.deltaTime);
-        Vector3 lookDirection = MovementVector.normalized;
-        if (lookDirection != Vector3.zero)
-        {
-            Agent.transform.rotation = Quaternion.Lerp(
-                transform.rotation,
-                Quaternion.LookRotation(lookDirection),
+            TargetDirection = Vector3.Lerp(
+                TargetDirection,
+                MovementVector,
                 Mathf.Clamp01(LerpTime * TargetLerpSpeed * (1 - Smoothing))
             );
-        }
 
-        LerpTime += Time.deltaTime;
- 
+            Agent.Move(TargetDirection * Agent.speed * Time.deltaTime);
+            Vector3 lookDirection = MovementVector.normalized;
+            if (lookDirection != Vector3.zero)
+            {
+                Agent.transform.rotation = Quaternion.Lerp(
+                    transform.rotation,
+                    Quaternion.LookRotation(lookDirection),
+                    Mathf.Clamp01(LerpTime * TargetLerpSpeed * (1 - Smoothing))
+                );
+            }
+
+            LerpTime += Time.deltaTime;
+
+            //Diaz
+        
+            if (Input.GetKey(KeyCode.Mouse0))
+            {
+                playerAnimationManager.ChangePlayerAttackAnimation();
+
+                if (Physics.OverlapSphere(attackRangePoint.transform.position, attackRadius, layerMask).Length > 0)
+                {
+                    Debug.Log(Physics.OverlapSphere(attackRangePoint.transform.position, attackRadius, layerMask)[0]);
+                }
+            }
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(attackRangePoint.transform.position, attackRadius);
     }
 
     public void KillEnemy()
