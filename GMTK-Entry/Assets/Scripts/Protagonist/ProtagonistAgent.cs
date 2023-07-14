@@ -36,6 +36,10 @@ public class ProtagonistAgent : MonoBehaviour
     {
         while(!isDead)
         {
+            //Debug.Log("Magnitute: " + agent.velocity.magnitude);
+
+            protaAnimationManager.ChangeProtaMovementAnimation(isFighting, agent.velocity.magnitude);
+
             NPCPlayableCharacter NPCFound = FindNearestEnemy();
 
             if(NPCFound != null)
@@ -80,6 +84,7 @@ public class ProtagonistAgent : MonoBehaviour
     public void SetAsDead()
     {
         isDead = true;
+        protaAnimationManager.ChangeProtaToDeadAnimation();
     }    
 
     private Vector3 RetreatAndShoot(NPCPlayableCharacter NPCFound)
@@ -125,7 +130,7 @@ public class ProtagonistAgent : MonoBehaviour
         {
             Debug.Log("NPC FOUND!");
             NPCPlayableCharacter enemyCharacter = collider.GetComponent<NPCPlayableCharacter>();
-            if (enemyCharacter != null)
+            if (enemyCharacter != null && enemyCharacter.isActive)
             {
                 // Comprobar si hay una pared o algo enfrente del enemigo
                 Vector3 directionToEnemy = enemyCharacter.transform.position - transform.position;
@@ -152,6 +157,12 @@ public class ProtagonistAgent : MonoBehaviour
         }
 
         return nearestEnemy;
+    }
+
+    public void PlayerReceivedDamage()
+    {
+        protaAnimationManager.ChangeProtaTakingDamageAnimation();
+        UIHandler.Instance.ReduceHealth();
     }
 
 }

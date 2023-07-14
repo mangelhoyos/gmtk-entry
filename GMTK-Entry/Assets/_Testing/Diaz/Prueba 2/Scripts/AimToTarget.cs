@@ -22,7 +22,7 @@ public class AimToTarget : MonoBehaviour
         if (isMoving)
         {
             // Calcula la nueva posición suavemente utilizando Lerp
-            Vector3 newPosition = Vector3.Lerp(target.transform.position, targetPosition, moveSpeed * Time.deltaTime);
+            Vector3 newPosition = Vector3.MoveTowards(target.transform.position, targetPosition, moveSpeed * Time.deltaTime);
 
             // Actualiza la posición del objetivo
             target.transform.position = newPosition;

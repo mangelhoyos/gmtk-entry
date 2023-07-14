@@ -12,25 +12,25 @@ public class ProtaAnimationManager : MonoBehaviour
     {
         if (isDead) return;
 
-        if (velocity > 0.5f)
+        if (velocity > 1f)
         {
             if (!isInCombat)
             {
-                // Mover hacia atrás
-                animator.SetBool("IsMovingForward", false);
-                animator.SetBool("IsMovingBackward", true);
+                // Mover hacia adelante
+                animator.SetBool("IsMovingFoward", true);
+                animator.SetBool("IsMovingBackward", false);
             }
             else
             {
-                // Mover hacia adelante
-                animator.SetBool("IsMovingForward", true);
-                animator.SetBool("IsMovingBackward", false);
+                // Mover hacia atras
+                animator.SetBool("IsMovingFoward", false);
+                animator.SetBool("IsMovingBackward", true);
             }
         }
         else
         {
             // No hay movimiento, desactiva todas las animaciones de movimiento
-            animator.SetBool("IsMovingForward", false);
+            animator.SetBool("IsMovingFoward", false);
             animator.SetBool("IsMovingBackward", false);
         }
     }

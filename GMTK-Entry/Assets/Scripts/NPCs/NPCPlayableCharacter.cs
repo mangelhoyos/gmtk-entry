@@ -17,6 +17,8 @@ public class NPCPlayableCharacter : MonoBehaviour
 
     public bool isActive = false;
 
+    public bool justOnce = false;
+
     //Movement
     private Camera CameraUsed;
     [Header("Movement")]
@@ -37,7 +39,6 @@ public class NPCPlayableCharacter : MonoBehaviour
 
     [SerializeField] private GameObject attackRangePoint;
     [SerializeField] private float attackRadius = 1f;
-    [SerializeField] private float maxDistance = 1f;
     [SerializeField] private LayerMask layerMask;
 
     private void OnEnable()
@@ -124,8 +125,12 @@ public class NPCPlayableCharacter : MonoBehaviour
             LerpTime += Time.deltaTime;
 
             //Diaz
-        
-            if (Input.GetKey(KeyCode.Mouse0))
+
+            Debug.Log("Magnitute: " + Agent.velocity.magnitude);
+
+            playerAnimationManager.ChangePlayerMovementAnimation(Agent.velocity.magnitude);
+
+            if (Input.GetKey(KeyCode.Mouse0) && !justOnce)
             {
                 playerAnimationManager.ChangePlayerAttackAnimation();
 
@@ -133,6 +138,8 @@ public class NPCPlayableCharacter : MonoBehaviour
                 {
                     Debug.Log(Physics.OverlapSphere(attackRangePoint.transform.position, attackRadius, layerMask)[0]);
                 }
+
+                justOnce = true;
             }
         }
     }
@@ -145,7 +152,10 @@ public class NPCPlayableCharacter : MonoBehaviour
 
     public void KillEnemy()
     {
-
+        //selectedPlayer = null;
+        //isDead = true;
+        //isActive = false;
+        //playerAnimationManager.ChangeProtaToDeadAnimation();
     }
 
     public static void SelectNPC(NPCPlayableCharacter selectedCharacter)
