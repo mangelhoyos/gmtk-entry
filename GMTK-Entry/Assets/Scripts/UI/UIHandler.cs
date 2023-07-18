@@ -64,6 +64,7 @@ public class UIHandler : MonoBehaviour
             {
                 isDead = true;
                 OnDeath?.Invoke();
+                Debug.Log("Los eventos de miguel no sirven");
             }
         }
     }

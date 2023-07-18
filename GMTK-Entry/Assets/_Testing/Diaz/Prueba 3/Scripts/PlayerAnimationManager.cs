@@ -16,7 +16,7 @@ public class PlayerAnimationManager : MonoBehaviour
     {
         if (isDead) return;
 
-        if (velocity > 1f)
+        if (velocity > 0.5f)
         {
             animator.SetBool("IsRunning", true);
         }

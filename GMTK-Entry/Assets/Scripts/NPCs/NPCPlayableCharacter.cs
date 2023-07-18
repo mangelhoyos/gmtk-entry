@@ -11,7 +11,7 @@ public class NPCPlayableCharacter : MonoBehaviour
 
     private bool isDead = false;
 
-    private NavMeshAgent Agent;
+    [HideInInspector] public NavMeshAgent Agent;
 
     public Action OnDeath;
 
@@ -73,7 +73,7 @@ public class NPCPlayableCharacter : MonoBehaviour
 
     private void GeneratePlayerBehaviour()
     {
-        if (isActive)
+        if (isActive && !justOnce)
         {
             MovementVector = Vector3.zero;
 
@@ -126,17 +126,19 @@ public class NPCPlayableCharacter : MonoBehaviour
 
             //Diaz
 
-            Debug.Log("Magnitute: " + Agent.velocity.magnitude);
+            Debug.Log("Magnitute: " + MovementVector.magnitude);
 
-            playerAnimationManager.ChangePlayerMovementAnimation(Agent.velocity.magnitude);
+            playerAnimationManager.ChangePlayerMovementAnimation(MovementVector.magnitude);
 
             if (Input.GetKey(KeyCode.Mouse0) && !justOnce)
             {
                 playerAnimationManager.ChangePlayerAttackAnimation();
 
+                Agent.enabled = false;
+
                 if (Physics.OverlapSphere(attackRangePoint.transform.position, attackRadius, layerMask).Length > 0)
                 {
-                    Debug.Log(Physics.OverlapSphere(attackRangePoint.transform.position, attackRadius, layerMask)[0]);
+                    Physics.OverlapSphere(attackRangePoint.transform.position, attackRadius, layerMask)[0].GetComponent<ProtagonistAgent>().PlayerReceivedDamage();
                 }
 
                 justOnce = true;
@@ -152,10 +154,10 @@ public class NPCPlayableCharacter : MonoBehaviour
 
     public void KillEnemy()
     {
-        //selectedPlayer = null;
-        //isDead = true;
-        //isActive = false;
-        //playerAnimationManager.ChangeProtaToDeadAnimation();
+        selectedPlayer = null;
+        isDead = true;
+        isActive = false;
+        playerAnimationManager.ChangeProtaToDeadAnimation();
     }
 
     public static void SelectNPC(NPCPlayableCharacter selectedCharacter)

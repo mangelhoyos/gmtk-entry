@@ -8,7 +8,8 @@ public class AimToTarget : MonoBehaviour
 {
     [SerializeField] private GameObject target;
     [SerializeField] private float moveSpeed = 1f;
-    [SerializeField] private float fadeSpeed = 1f;
+
+    [SerializeField] private Transform pistolPosition;
 
     private Vector3 targetPosition;
     private bool isMoving = false;
@@ -21,17 +22,25 @@ public class AimToTarget : MonoBehaviour
     {
         if (isMoving)
         {
+            Vector3 fixedPosition = targetPosition;
+
+            fixedPosition.y = target.transform.position.y;
+
             // Calcula la nueva posición suavemente utilizando Lerp
-            Vector3 newPosition = Vector3.MoveTowards(target.transform.position, targetPosition, moveSpeed * Time.deltaTime);
+            Vector3 newPosition = Vector3.MoveTowards(target.transform.position, fixedPosition, moveSpeed * Time.deltaTime);
 
             // Actualiza la posición del objetivo
             target.transform.position = newPosition;
 
             // Verifica si se alcanzó la posición objetivo con una tolerancia pequeña
-            if (Vector3.Distance(target.transform.position, targetPosition) < 0.01f)
+            if (Vector3.Distance(target.transform.position, fixedPosition) < 0.01f)
             {
                 isMoving = false;
             }
+        }
+        else
+        {
+            target.transform.position = pistolPosition.position;
         }
     }
 

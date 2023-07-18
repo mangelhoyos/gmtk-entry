@@ -20,7 +20,15 @@ public class ProtagonistAgent : MonoBehaviour
     [SerializeField] private ProtaAnimationManager protaAnimationManager;
     [SerializeField] private PistolManager pistolManager;
 
+    private float startVelocity = 0;
+
     private bool isDead = false;
+
+    private void Awake()
+    {
+        startVelocity = agent.speed;
+    }
+
     private void Start()
     {
         StartCoroutine(CheckCurrentState());
@@ -55,6 +63,7 @@ public class ProtagonistAgent : MonoBehaviour
                 Vector3 npcFixedPosition = NPCFound.transform.position;
                 npcFixedPosition.y = transform.position.y;
                 transform.LookAt(npcFixedPosition);
+                agent.speed = startVelocity / 2;
 
                 yield return null;
                 continue;
@@ -68,6 +77,7 @@ public class ProtagonistAgent : MonoBehaviour
                 yield return new WaitForSeconds(1f);
                 isFighting = false;
                 agent.updateRotation = true;
+                agent.speed = startVelocity;
             }
 
             Debug.Log("Following path..");

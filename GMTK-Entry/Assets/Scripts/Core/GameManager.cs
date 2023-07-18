@@ -28,6 +28,8 @@ public class GameManager : MonoBehaviour
 
     IEnumerator FadeScreenToBlack()
     {
+        Debug.Log("No funciona nada de lo que hace miguel");
+
         while(fadeInGroup.alpha < 1)
         {
             fadeInGroup.alpha += Time.deltaTime;

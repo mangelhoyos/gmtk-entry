@@ -20,6 +20,7 @@ public class Anim_PlayerAttack : StateMachineBehaviour
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         animator.transform.parent.GetComponent<NPCPlayableCharacter>().justOnce = false;
+        animator.transform.parent.GetComponent<NPCPlayableCharacter>().Agent.enabled = true;
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()

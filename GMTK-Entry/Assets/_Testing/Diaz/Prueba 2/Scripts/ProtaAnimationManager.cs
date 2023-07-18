@@ -53,6 +53,6 @@ public class ProtaAnimationManager : MonoBehaviour
     {
         if (isDead) return;
         // Activar la animacion de disparo
-        animator.SetTrigger("IsShooting");
+        pistolAnimator.SetTrigger("IsShooting");
     }
 }
