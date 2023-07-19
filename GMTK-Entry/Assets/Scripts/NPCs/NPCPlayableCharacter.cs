@@ -134,6 +134,8 @@ public class NPCPlayableCharacter : MonoBehaviour
             {
                 playerAnimationManager.ChangePlayerAttackAnimation();
 
+                AudioManager.instance.Play("Shoot");
+
                 Agent.enabled = false;
 
                 if (Physics.OverlapSphere(attackRangePoint.transform.position, attackRadius, layerMask).Length > 0)
@@ -158,6 +160,7 @@ public class NPCPlayableCharacter : MonoBehaviour
         isDead = true;
         isActive = false;
         playerAnimationManager.ChangeProtaToDeadAnimation();
+        AudioManager.instance.Play("Damage");
     }
 
     public static void SelectNPC(NPCPlayableCharacter selectedCharacter)

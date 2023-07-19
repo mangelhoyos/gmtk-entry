@@ -59,12 +59,12 @@ public class UIHandler : MonoBehaviour
         if (!isDead)
         {
             actualHealth--;
+            AudioManager.instance.Play("Damage");
             StartCoroutine(SmoothReduceHealthBar((float)actualHealth / (float)maxHealth));
             if (actualHealth <= 0)
             {
                 isDead = true;
                 OnDeath?.Invoke();
-                Debug.Log("Los eventos de miguel no sirven");
             }
         }
     }
