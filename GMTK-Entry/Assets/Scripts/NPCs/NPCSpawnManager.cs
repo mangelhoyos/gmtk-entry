@@ -7,6 +7,7 @@ public class NPCSpawnManager : MonoBehaviour
     [SerializeField] private SpawnPoint[] spawnPoints;
     [SerializeField] private NPCPlayableCharacter npcPrefab;
     [SerializeField] private float timeBetweenSpawns;
+    [SerializeField] private ProtagonistPathHandler protagonistPathHandler;
 
     public void InitializeNewNPC(Transform protagonistTransform)
     {
@@ -20,10 +21,10 @@ public class NPCSpawnManager : MonoBehaviour
         //Search for the closest spawnpoint to the protagonistTransform and spawn the NPC right there
 
         SpawnPoint closestSpawnPoint = spawnPoints[0];
-        float closestDistance = Vector3.Distance(protagonistTransform.position, closestSpawnPoint.transform.position);
+        float closestDistance = Vector3.Distance(protagonistPathHandler.GetActualPathTargetPosition(), closestSpawnPoint.transform.position);
         for(int i = 1; i < spawnPoints.Length; i++)
         {
-            float distance = Vector3.Distance(protagonistTransform.position, spawnPoints[i].transform.position);
+            float distance = Vector3.Distance(protagonistPathHandler.GetActualPathTargetPosition(), spawnPoints[i].transform.position);
             if(distance < closestDistance)
             {
                 closestSpawnPoint = spawnPoints[i];

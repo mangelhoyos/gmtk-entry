@@ -1257,6 +1257,18 @@ MonoBehaviour:
           m_StringArgument: Chess
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 989722884}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: GameOver
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Chess
+          m_BoolArgument: 0
+        m_CallState: 2
   delayTime: 1
 --- !u!4 &246238526 stripped
 Transform:
@@ -2024,7 +2036,8 @@ MonoBehaviour:
   - {fileID: 705189813}
   - {fileID: 1992503980}
   npcPrefab: {fileID: 7792574423450417416, guid: c9341ea7d094a884fafdb16a26b02599, type: 3}
-  timeBetweenSpawns: 6
+  timeBetweenSpawns: 4
+  protagonistPathHandler: {fileID: 1631567280}
 --- !u!4 &468039314
 Transform:
   m_ObjectHideFlags: 0
@@ -11351,7 +11364,7 @@ PrefabInstance:
       objectReference: {fileID: 2020938466}
     - target: {fileID: 6171302342149420064, guid: 633436f40203b644da10093d43204f33, type: 3}
       propertyPath: maxHealth
-      value: 10
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 6171302342149420064, guid: 633436f40203b644da10093d43204f33, type: 3}
       propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.size

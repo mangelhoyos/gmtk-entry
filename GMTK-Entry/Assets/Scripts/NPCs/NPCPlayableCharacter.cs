@@ -156,11 +156,17 @@ public class NPCPlayableCharacter : MonoBehaviour
 
     public void KillEnemy()
     {
-        selectedPlayer = null;
-        isDead = true;
-        isActive = false;
-        playerAnimationManager.ChangeProtaToDeadAnimation();
-        AudioManager.instance.Play("Damage");
+        if (!isDead)
+        {
+            selectedPlayer = null;
+            isDead = true;
+            isActive = false;
+            playerAnimationManager.ChangeProtaToDeadAnimation();
+            AudioManager.instance.Play("Damage");
+            AudioManager.instance.Play("Points");
+            UIHandler.Instance.AddPointsToMarker(1000, transform.position);
+            GameManager.instance.EnemyDead();
+        }
     }
 
     public static void SelectNPC(NPCPlayableCharacter selectedCharacter)
