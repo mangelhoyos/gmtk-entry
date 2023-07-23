@@ -8,12 +8,19 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
 
     [SerializeField] private CanvasGroup fadeInGroup;
+    [SerializeField] private NPCSpawnManager spawnManager;
+    [SerializeField] private Transform protagonistTransform;
 
     private bool gameOver = false;
 
     private void Awake()
     {
         instance = this;
+    }
+
+    private void Start()
+    {
+        EnemyDead();
     }
 
     [ContextMenu("Game over")]
@@ -37,5 +44,10 @@ public class GameManager : MonoBehaviour
         }
         yield return new WaitForSeconds(1);
         SceneManager.LoadScene("MainMenu");
+    }
+
+    public void EnemyDead()
+    {
+        spawnManager.InitializeNewNPC(protagonistTransform);
     }
 }
